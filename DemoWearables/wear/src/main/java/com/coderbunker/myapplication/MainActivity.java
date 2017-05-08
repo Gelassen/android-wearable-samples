@@ -1,6 +1,7 @@
 package com.coderbunker.myapplication;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,8 +12,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.coderbunker.mylibrary.Apps;
+import com.coderbunker.mylibrary.AssetHelper;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.wearable.Asset;
 import com.google.android.gms.wearable.DataApi;
 import com.google.android.gms.wearable.DataEvent;
 import com.google.android.gms.wearable.DataEventBuffer;
@@ -92,17 +95,30 @@ public class MainActivity extends Activity implements
     @Override
     public void onDataChanged(DataEventBuffer dataEventBuffer) {
         Log.d(App.TAG, "onDataChanged");
+        Log.d(App.TAG, "Events: " + dataEventBuffer.getCount());
         for (DataEvent event : dataEventBuffer) {
             if (event.getType() == DataEvent.TYPE_CHANGED) {
                 // DataItem changed
                 DataItem item = event.getDataItem();
-                if (item.getUri().getPath().compareTo(Apps.Params.PATH) == 0) {
-                    DataMap dataMap = DataMapItem.fromDataItem(item).getDataMap();
-                    updateCount(dataMap.getInt(Apps.Params.COUNT_KEY));
+                switch (item.getUri().getPath()) {
+                    case Apps.Params.PATH:
+                        DataMap dataMap = DataMapItem.fromDataItem(item).getDataMap();
+                        updateCount(dataMap.getInt(Apps.Params.COUNT_KEY));
+                        break;
+                    case Apps.Params.IMAGE:
+                        dataMap = DataMapItem.fromDataItem(item).getDataMap();
+                        Asset asset = dataMap.getAsset(Apps.Params.IMAGE_NAME);
+                        Bitmap bitmap = AssetHelper.loadBitmapFromAsset(mGoogleApiClient, asset);
+                        Log.d(App.TAG, "Is Bitmap obj available? " + (bitmap == null));
+                        break;
+                    default:
+                        Log.d(App.TAG, "Unhandled path");
                 }
             } else if (event.getType() == DataEvent.TYPE_DELETED) {
                 // DataItem deleted
                 Log.d(App.TAG, "DataEvent.TYPE_DELETED");
+            } else {
+                Log.d(App.TAG, "DataEvent: " + event.getType());
             }
         }
 

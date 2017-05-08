@@ -1,4 +1,4 @@
-package com.coderbunker.myapplication;
+package com.coderbunker.mylibrary;
 
 
 import android.app.PendingIntent;
@@ -13,9 +13,9 @@ public class NotificationHelper {
 
     private static final String EXTRA_EVENT_ID = "1000";
 
-    public void fireNotification(Context context) {
+    public void fireNotification(Context context, Class clazz) {
         int notificationId = 001;
-        Intent viewIntent = new Intent(context, MainActivity.class);
+        Intent viewIntent = new Intent(context, clazz);
         int eventId = 1000;
         viewIntent.putExtra(EXTRA_EVENT_ID, eventId);
         PendingIntent viewPendingIntent =
