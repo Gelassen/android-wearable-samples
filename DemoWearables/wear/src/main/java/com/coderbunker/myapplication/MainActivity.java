@@ -74,12 +74,10 @@ public class MainActivity extends Activity implements
         mGoogleApiClient.disconnect();
     }
 
-
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         Log.d(App.TAG, "onConnected");
         Wearable.DataApi.addListener(mGoogleApiClient, this);
-
     }
 
     @Override
