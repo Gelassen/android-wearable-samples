@@ -11,6 +11,7 @@ import android.view.View;
 
 import com.coderbunker.mylibrary.Apps;
 import com.coderbunker.mylibrary.AssetHelper;
+import com.coderbunker.mylibrary.BaseActivity;
 import com.coderbunker.mylibrary.NotificationHelper;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -22,25 +23,14 @@ import com.google.android.gms.wearable.PutDataMapRequest;
 import com.google.android.gms.wearable.PutDataRequest;
 import com.google.android.gms.wearable.Wearable;
 
-public class MainActivity extends AppCompatActivity implements
-        GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener {
+public class MainActivity extends BaseActivity {
 
     private int count = 0;
-
-    private GoogleApiClient mGoogleApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addApi(Wearable.API)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .build();
-        mGoogleApiClient.connect();
 
         findViewById(R.id.fire_notification)
                 .setOnClickListener(new View.OnClickListener() {
@@ -60,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements
         });
 
         findViewById(R.id.sync_image)
-                .setOnClickListener(new View.OnClickListener() {
+                .setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sendImage();
@@ -129,5 +119,15 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Log.d(App.TAG, "onConnectionFailed");
+    }
+
+    @Override
+    protected void subscribe() {
+        // TODO complete me
+    }
+
+    @Override
+    protected void unsubscribe() {
+        // TODO complete me
     }
 }
