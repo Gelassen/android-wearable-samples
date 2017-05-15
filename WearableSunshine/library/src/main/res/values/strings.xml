@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Library</string>
+
+    <!-- For labelling today's forecast -->
+    <string name="today">Today</string>
+
+    <!-- For labelling tomorrow's forecast -->
+    <string name="tomorrow">Tomorrow</string>
+
+</resources>
