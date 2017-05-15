@@ -48,9 +48,6 @@ public class MainActivity extends com.example.android.sunshine.library.WearableA
         WearableListView.ClickListener,
         DataApi.DataListener{
 
-    private List<WeatherData> viewItemList = new ArrayList<>();
-    private Node node;
-
     private WeatherListPresenter presenter;
 
     @Override
@@ -73,7 +70,6 @@ public class MainActivity extends com.example.android.sunshine.library.WearableA
                         Log.d(App.TAG, "Nodes amount: " + nodes.size());
                         boolean isThereConnectedNodes = nodes.size() != 0;
                         if (isThereConnectedNodes) {
-                            node = nodes.get(0);
                         }
                     }
                 });
@@ -106,7 +102,7 @@ public class MainActivity extends com.example.android.sunshine.library.WearableA
         });
 
         WearableRecyclerView wearableListView = (WearableRecyclerView) findViewById(R.id.wearable_list_view);
-        wearableListView.setAdapter(new ListViewAdapter(this, viewItemList));
+        wearableListView.setAdapter(new WearableAdapter());
     }
 
     @Override
@@ -147,6 +143,7 @@ public class MainActivity extends com.example.android.sunshine.library.WearableA
     @Override
     public void showData(List<WeatherData> weatherData) {
         WearableRecyclerView wearableListView = (WearableRecyclerView) findViewById(R.id.wearable_list_view);
-        wearableListView.setAdapter(new ListViewAdapter(this, weatherData));
+        WearableAdapter adapter = (WearableAdapter) wearableListView.getAdapter();
+        adapter.notifyDatsetChange(weatherData);
     }
 }

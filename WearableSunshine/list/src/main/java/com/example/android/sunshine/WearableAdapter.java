@@ -1,23 +1,29 @@
 package com.example.android.sunshine;
 
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.android.sunshine.library.model.WeatherData;
+import com.example.android.sunshine.library.utils.SunshineDateUtils;
+import com.example.android.sunshine.library.utils.SunshineWeatherUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class WearableAdapter extends RecyclerView.Adapter<WearableAdapter.ViewHolder> {
 
-    private List<String> data = new ArrayList<>();
+    private List<WeatherData> data = new ArrayList<>();
 
-    public WearableAdapter() {
-        for (int idx = 0; idx < 10; idx++) {
-            data.add(String.valueOf(idx));
-        }
+    public void notifyDatsetChange(List<WeatherData> data) {
+        this.data.clear();
+        this.data = new ArrayList<>(data);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -29,7 +35,9 @@ public class WearableAdapter extends RecyclerView.Adapter<WearableAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.content.setText(data.get(position));
+        WeatherData weatherData = data.get(position);
+        holder.image.setImageResource(SunshineWeatherUtils.getSmallArtResourceIdForWeatherCondition(weatherData.getWeatherId()));
+        holder.content.setText(getData(holder.itemView.getContext(), weatherData));
     }
 
     @Override
@@ -37,13 +45,25 @@ public class WearableAdapter extends RecyclerView.Adapter<WearableAdapter.ViewHo
         return data.size();
     }
 
+    private String getData(Context context, WeatherData weatherData) {
+        StringBuilder result = new StringBuilder();
+        result.append(SunshineDateUtils.getFriendlyDateString(context, weatherData.getDate(), false));
+        result.append(" ");
+        result.append(weatherData.getMax());
+        result.append(" ");
+        result.append(weatherData.getMin());
+        return result.toString();
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView content;
+        private final ImageView image;
+        private final TextView content;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            content = (TextView) itemView.findViewById(R.id.content);
+            image = (ImageView) itemView.findViewById(R.id.image);
+            content = (TextView) itemView.findViewById(R.id.text);
         }
     }
 }

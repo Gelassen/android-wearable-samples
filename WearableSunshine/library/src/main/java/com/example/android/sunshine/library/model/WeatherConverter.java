@@ -131,7 +131,7 @@ public class WeatherConverter implements IConverter<ContentValues, WeatherData> 
         result.setDate(cursor.getLong(INDEX_WEATHER_DATE));
         result.setMax(cursor.getLong(INDEX_WEATHER_MAX_TEMP));
         result.setMin(cursor.getLong(INDEX_WEATHER_MIN_TEMP));
-        result.setConditionId(INDEX_WEATHER_CONDITION_ID);
+        result.setWeatherId(cursor.getInt(INDEX_WEATHER_CONDITION_ID));
         return result;
     }
 
