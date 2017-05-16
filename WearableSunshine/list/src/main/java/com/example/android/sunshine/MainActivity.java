@@ -1,21 +1,5 @@
-
-/*
- * Copyright 2015. Daniel Ramírez.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *       http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.example.android.sunshine;
+
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,7 +7,6 @@ import android.support.wearable.view.WearableListView;
 import android.support.wearable.view.WearableRecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.android.sunshine.library.App;
 import com.example.android.sunshine.library.model.WeatherData;
@@ -40,7 +23,6 @@ import com.google.android.gms.wearable.Node;
 import com.google.android.gms.wearable.NodeApi;
 import com.google.android.gms.wearable.Wearable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends com.example.android.sunshine.library.WearableActivity implements
@@ -57,52 +39,10 @@ public class MainActivity extends com.example.android.sunshine.library.WearableA
 
         presenter = new WeatherListPresenter(googleApiClient, this);
 
-        findViewById(R.id.wearable)
-                .setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PendingResult<NodeApi.GetConnectedNodesResult> pr = Wearable.NodeApi.getConnectedNodes(googleApiClient);
-                pr.setResultCallback(new ResultCallback<NodeApi.GetConnectedNodesResult>() {
-                    @Override
-                    public void onResult(@NonNull NodeApi.GetConnectedNodesResult getLocalNodeResult) {
-                        Log.d(App.TAG, "onResult");
-                        List<Node> nodes = getLocalNodeResult.getNodes();
-                        Log.d(App.TAG, "Nodes amount: " + nodes.size());
-                        boolean isThereConnectedNodes = nodes.size() != 0;
-                        if (isThereConnectedNodes) {
-                        }
-                    }
-                });
-            }
-        });
-
-        findViewById(R.id.cache)
-                .setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(App.TAG, "Get data from cache: onClick");
-
-                presenter.processWeatherCachedData("f4c00be3");
-//                presenter.processWeatherCachedData(googleApiClient);
-//
-//                final PendingResult<DataApi.DataItemResult> dataItem = Wearable.DataApi.getDataItem(
-//                        googleApiClient,
-//                        DataWearInteractor.getUri(node.getId(), Params.WEATHER)
-//                );
-//                dataItem.setResultCallback(new ResultCallback<DataApi.DataItemResult>() {
-//                    @Override
-//                    public void onResult(@NonNull DataApi.DataItemResult dataItemResult) {
-//                        Log.d(App.TAG, "onResult [cache] " + dataItemResult.getStatus().getStatusMessage());
-//                        DataMap dataMap = DataMap.fromByteArray(dataItemResult.getDataItem().getData());
-//                        String json = dataMap.getString(Params.SYNC_WEATHER_LIST);
-//                        Log.d(App.TAG, "JSON: " + json);
-//                    }
-//                });
-            }
-        });
-
         WearableRecyclerView wearableListView = (WearableRecyclerView) findViewById(R.id.wearable_list_view);
         wearableListView.setAdapter(new WearableAdapter());
+
+        presenter.processWeatherCachedData();
     }
 
     @Override

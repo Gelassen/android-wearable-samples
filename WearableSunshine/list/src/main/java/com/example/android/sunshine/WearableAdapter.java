@@ -36,8 +36,11 @@ public class WearableAdapter extends RecyclerView.Adapter<WearableAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         WeatherData weatherData = data.get(position);
-        holder.image.setImageResource(SunshineWeatherUtils.getSmallArtResourceIdForWeatherCondition(weatherData.getWeatherId()));
-        holder.content.setText(getData(holder.itemView.getContext(), weatherData));
+        holder.image.setImageResource(
+                SunshineWeatherUtils.getSmallArtResourceIdForWeatherCondition(weatherData.getWeatherId()));
+        holder.contentDate.setText(
+                SunshineDateUtils.getFriendlyDateString(holder.itemView.getContext(), weatherData.getDate(), false));
+        holder.contentDegrees.setText(getData(holder.itemView.getContext(), weatherData));
     }
 
     @Override
@@ -47,7 +50,6 @@ public class WearableAdapter extends RecyclerView.Adapter<WearableAdapter.ViewHo
 
     private String getData(Context context, WeatherData weatherData) {
         StringBuilder result = new StringBuilder();
-        result.append(SunshineDateUtils.getFriendlyDateString(context, weatherData.getDate(), false));
         result.append(" ");
         result.append(weatherData.getMax());
         result.append(" ");
@@ -58,12 +60,14 @@ public class WearableAdapter extends RecyclerView.Adapter<WearableAdapter.ViewHo
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         private final ImageView image;
-        private final TextView content;
+        private final TextView contentDegrees;
+        private final TextView contentDate;
 
         public ViewHolder(View itemView) {
             super(itemView);
             image = (ImageView) itemView.findViewById(R.id.image);
-            content = (TextView) itemView.findViewById(R.id.text);
+            contentDegrees = (TextView) itemView.findViewById(R.id.text_degree);
+            contentDate = (TextView) itemView.findViewById(R.id.text_date);
         }
     }
 }
