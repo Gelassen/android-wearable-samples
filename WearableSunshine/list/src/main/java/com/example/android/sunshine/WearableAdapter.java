@@ -3,12 +3,14 @@ package com.example.android.sunshine;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.android.sunshine.library.App;
 import com.example.android.sunshine.library.model.WeatherData;
 import com.example.android.sunshine.library.utils.SunshineDateUtils;
 import com.example.android.sunshine.library.utils.SunshineWeatherUtils;
@@ -18,7 +20,20 @@ import java.util.List;
 
 public class WearableAdapter extends RecyclerView.Adapter<WearableAdapter.ViewHolder> {
 
+    public interface Listener {
+        void onClick(WeatherData weatherData);
+    }
+
     private List<WeatherData> data = new ArrayList<>();
+    private Listener listener;
+
+    public WearableAdapter(Listener listener) {
+        this.listener = listener;
+    }
+
+    public void setListener(Listener listener) {
+        this.listener = listener;
+    }
 
     public void notifyDatsetChange(List<WeatherData> data) {
         this.data.clear();
@@ -35,12 +50,21 @@ public class WearableAdapter extends RecyclerView.Adapter<WearableAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        WeatherData weatherData = data.get(position);
+        final WeatherData weatherData = data.get(position);
         holder.image.setImageResource(
                 SunshineWeatherUtils.getSmallArtResourceIdForWeatherCondition(weatherData.getWeatherId()));
         holder.contentDate.setText(
                 SunshineDateUtils.getFriendlyDateString(holder.itemView.getContext(), weatherData.getDate(), false));
         holder.contentDegrees.setText(getData(holder.itemView.getContext(), weatherData));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(App.TAG, "Open a new screen");
+                if (listener != null) {
+                    listener.onClick(weatherData);
+                }
+            }
+        });
     }
 
     @Override

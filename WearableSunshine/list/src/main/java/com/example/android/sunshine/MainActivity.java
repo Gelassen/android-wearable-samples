@@ -2,31 +2,26 @@ package com.example.android.sunshine;
 
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.wearable.view.WearableListView;
 import android.support.wearable.view.WearableRecyclerView;
 import android.util.Log;
-import android.view.View;
 
 import com.example.android.sunshine.library.App;
 import com.example.android.sunshine.library.model.WeatherData;
 import com.example.android.sunshine.library.utils.DataWearInteractor;
 import com.example.android.sunshine.presenter.WeatherListPresenter;
 import com.example.android.sunshine.presenter.WeatherListView;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.data.FreezableUtils;
 import com.google.android.gms.wearable.DataApi;
 import com.google.android.gms.wearable.DataEvent;
 import com.google.android.gms.wearable.DataEventBuffer;
-import com.google.android.gms.wearable.Node;
-import com.google.android.gms.wearable.NodeApi;
 import com.google.android.gms.wearable.Wearable;
 
 import java.util.List;
 
 public class MainActivity extends com.example.android.sunshine.library.WearableActivity implements
         WeatherListView,
+        WearableAdapter.Listener,
         WearableListView.ClickListener,
         DataApi.DataListener{
 
@@ -40,7 +35,8 @@ public class MainActivity extends com.example.android.sunshine.library.WearableA
         presenter = new WeatherListPresenter(googleApiClient, this);
 
         WearableRecyclerView wearableListView = (WearableRecyclerView) findViewById(R.id.wearable_list_view);
-        wearableListView.setAdapter(new WearableAdapter());
+        wearableListView.setAdapter(new WearableAdapter(this));
+        wearableListView.setCenterEdgeItems(true);
 
         presenter.processWeatherCachedData();
     }
@@ -85,5 +81,11 @@ public class MainActivity extends com.example.android.sunshine.library.WearableA
         WearableRecyclerView wearableListView = (WearableRecyclerView) findViewById(R.id.wearable_list_view);
         WearableAdapter adapter = (WearableAdapter) wearableListView.getAdapter();
         adapter.notifyDatsetChange(weatherData);
+    }
+
+    @Override
+    public void onClick(WeatherData weatherData) {
+        Log.d(App.TAG, "onClick to open detail activity");
+        DetailsActivity.start(this);
     }
 }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:maxLevel="0">
+        <inset
+            android:drawable="@drawable/ic_storm"
+            android:insetTop="@dimen/item_padding_top"
+            android:insetBottom="@dimen/item_padding_bottom"
+            />
+    </item>
+    <item android:maxLevel="1">
+        <inset
+            android:drawable="@drawable/ic_cloudy"
+            android:insetTop="@dimen/item_padding_top"
+            android:insetBottom="@dimen/item_padding_bottom"
+            />
+    </item>
+</level-list>
