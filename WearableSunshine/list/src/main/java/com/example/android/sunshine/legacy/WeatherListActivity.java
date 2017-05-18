@@ -1,4 +1,4 @@
-package com.example.android.sunshine;
+package com.example.android.sunshine.legacy;
 
 
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.wearable.view.WearableListView;
 import android.util.Log;
 
+import com.example.android.sunshine.R;
 import com.example.android.sunshine.library.App;
 import com.example.android.sunshine.library.WearableActivity;
 import com.example.android.sunshine.library.model.WeatherData;

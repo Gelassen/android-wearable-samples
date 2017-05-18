@@ -1,7 +1,10 @@
 package com.example.android.sunshine.library.model;
 
 
-public class WeatherData {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class WeatherData implements Parcelable {
 
     private float min;
     private float max;
@@ -12,6 +15,21 @@ public class WeatherData {
     private long date;
     private int humidity;
     private int conditionId;
+
+    public WeatherData() {
+    }
+
+    protected WeatherData(Parcel in) {
+        min = in.readFloat();
+        max = in.readFloat();
+        weatherId = in.readInt();
+        degrees = in.readFloat();
+        wind = in.readFloat();
+        pressure = in.readFloat();
+        date = in.readLong();
+        humidity = in.readInt();
+        conditionId = in.readInt();
+    }
 
     public float getMin() {
         return min;
@@ -84,4 +102,34 @@ public class WeatherData {
     public void setConditionId(int conditionId) {
         this.conditionId = conditionId;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeFloat(min);
+        dest.writeFloat(max);
+        dest.writeInt(weatherId);
+        dest.writeFloat(degrees);
+        dest.writeFloat(wind);
+        dest.writeFloat(pressure);
+        dest.writeLong(date);
+        dest.writeInt(humidity);
+        dest.writeInt(conditionId);
+    }
+
+    public static final Creator<WeatherData> CREATOR = new Creator<WeatherData>() {
+        @Override
+        public WeatherData createFromParcel(Parcel in) {
+            return new WeatherData(in);
+        }
+
+        @Override
+        public WeatherData[] newArray(int size) {
+            return new WeatherData[size];
+        }
+    };
 }

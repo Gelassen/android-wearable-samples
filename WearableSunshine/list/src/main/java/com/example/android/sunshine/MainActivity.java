@@ -3,10 +3,13 @@ package com.example.android.sunshine;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.wearable.view.GridViewPager;
 import android.support.wearable.view.WearableListView;
 import android.support.wearable.view.WearableRecyclerView;
 import android.util.Log;
 
+import com.example.android.sunshine.legacy.DetailsActivity;
+import com.example.android.sunshine.legacy.WearableAdapter;
 import com.example.android.sunshine.library.App;
 import com.example.android.sunshine.library.model.WeatherData;
 import com.example.android.sunshine.library.utils.DataWearInteractor;
@@ -27,19 +30,22 @@ public class MainActivity extends com.example.android.sunshine.library.WearableA
         DataApi.DataListener{
 
     private WeatherListPresenter presenter;
+    private WeatherGridAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_list_activity);
+        setContentView(R.layout.main_activity);
 
         presenter = new WeatherListPresenter(googleApiClient, this);
 
-        WearableRecyclerView wearableListView = (WearableRecyclerView) findViewById(R.id.wearable_list_view);
-        WearableAdapter adapter = new WearableAdapter(this);
+        GridViewPager wearableListView = (GridViewPager) findViewById(R.id.pager);
+        adapter = new WeatherGridAdapter(getFragmentManager());
         wearableListView.setAdapter(adapter);
-        wearableListView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        wearableListView.setCenterEdgeItems(true);
+//        WearableAdapter adapter = new WearableAdapter(this);
+//        wearableListView.setAdapter(adapter);
+//        wearableListView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+//        wearableListView.setCenterEdgeItems(true);
 
         presenter.processWeatherCachedData();
     }
@@ -81,9 +87,10 @@ public class MainActivity extends com.example.android.sunshine.library.WearableA
 
     @Override
     public void showData(List<WeatherData> weatherData) {
-        WearableRecyclerView wearableListView = (WearableRecyclerView) findViewById(R.id.wearable_list_view);
-        WearableAdapter adapter = (WearableAdapter) wearableListView.getAdapter();
-        adapter.notifyDatsetChange(weatherData);
+//        WearableRecyclerView wearableListView = (WearableRecyclerView) findViewById(R.id.wearable_list_view);
+//        WearableAdapter adapter = (WearableAdapter) wearableListView.getAdapter();
+//        adapter.notifyDatsetChange(weatherData);
+        adapter.update(weatherData);
     }
 
     @Override

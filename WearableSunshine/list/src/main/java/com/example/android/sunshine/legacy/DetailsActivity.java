@@ -1,16 +1,15 @@
-package com.example.android.sunshine;
+package com.example.android.sunshine.legacy;
 
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.DrawableUtils;
 import android.util.Log;
 import android.widget.ImageButton;
 
+import com.example.android.sunshine.R;
 import com.example.android.sunshine.library.App;
 
 public class DetailsActivity extends Activity {

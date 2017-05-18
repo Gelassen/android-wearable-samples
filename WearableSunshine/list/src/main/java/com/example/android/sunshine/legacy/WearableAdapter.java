@@ -1,4 +1,4 @@
-package com.example.android.sunshine;
+package com.example.android.sunshine.legacy;
 
 
 import android.content.Context;
@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.android.sunshine.R;
 import com.example.android.sunshine.library.App;
 import com.example.android.sunshine.library.model.WeatherData;
 import com.example.android.sunshine.library.utils.SunshineDateUtils;
