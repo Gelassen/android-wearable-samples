@@ -2,12 +2,13 @@ package com.example.android.sunshine;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.wearable.view.WearableListView;
-import android.support.wearable.view.WearableRecyclerView;
 import android.util.Log;
 
 import com.example.android.sunshine.library.App;
+import com.example.android.sunshine.library.WearableActivity;
 import com.example.android.sunshine.library.model.WeatherData;
 import com.example.android.sunshine.library.utils.DataWearInteractor;
 import com.example.android.sunshine.presenter.WeatherListPresenter;
@@ -17,29 +18,32 @@ import com.google.android.gms.wearable.DataApi;
 import com.google.android.gms.wearable.DataEvent;
 import com.google.android.gms.wearable.DataEventBuffer;
 import com.google.android.gms.wearable.Wearable;
+import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
 
 import java.util.List;
 
-public class MainActivity extends com.example.android.sunshine.library.WearableActivity implements
+public class WeatherListActivity extends WearableActivity implements
         WeatherListView,
         WearableAdapter.Listener,
         WearableListView.ClickListener,
-        DataApi.DataListener{
+        DataApi.DataListener {
 
     private WeatherListPresenter presenter;
+    private PagerAdapter adapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_list_activity);
+        setContentView(R.layout.weather_list_layout);
 
         presenter = new WeatherListPresenter(googleApiClient, this);
 
-        WearableRecyclerView wearableListView = (WearableRecyclerView) findViewById(R.id.wearable_list_view);
-        WearableAdapter adapter = new WearableAdapter(this);
-        wearableListView.setAdapter(adapter);
-        wearableListView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        wearableListView.setCenterEdgeItems(true);
+        RecyclerViewPager pager = (RecyclerViewPager) findViewById(R.id.pager);
+
+        pager.setLayoutManager(new LinearLayoutManager(this,
+                LinearLayoutManager.HORIZONTAL, false));
+        adapter = new PagerAdapter(pager, getLayoutInflater());
+        pager.setAdapter(adapter);
 
         presenter.processWeatherCachedData();
     }
@@ -68,6 +72,18 @@ public class MainActivity extends com.example.android.sunshine.library.WearableA
     }
 
     @Override
+    public void showData(List<WeatherData> weatherData) {
+        Log.d(App.TAG, "showData: " + weatherData.size());
+        adapter.notifyDatasetChange(weatherData);
+    }
+
+    @Override
+    public void onClick(WeatherData weatherData) {
+        Log.d(App.TAG, "onClick to open detail activity");
+        DetailsActivity.start(this);
+    }
+
+    @Override
     public void onDataChanged(DataEventBuffer dataEventBuffer) {
         Log.d(App.TAG, "[wearable] onDataChanged");
         DataWearInteractor eventInteractor = new DataWearInteractor();
@@ -77,18 +93,5 @@ public class MainActivity extends com.example.android.sunshine.library.WearableA
             Log.d(App.TAG, "Cache data on wearable side: " + data.size());
             Log.d(App.TAG, "Data event: " + dataEvent.getDataItem().getUri());
         }
-    }
-
-    @Override
-    public void showData(List<WeatherData> weatherData) {
-        WearableRecyclerView wearableListView = (WearableRecyclerView) findViewById(R.id.wearable_list_view);
-        WearableAdapter adapter = (WearableAdapter) wearableListView.getAdapter();
-        adapter.notifyDatsetChange(weatherData);
-    }
-
-    @Override
-    public void onClick(WeatherData weatherData) {
-        Log.d(App.TAG, "onClick to open detail activity");
-        DetailsActivity.start(this);
     }
 }
