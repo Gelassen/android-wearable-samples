@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Wearable Listview Example</string>
+    <string name="humidity" formatted="false">humidity %s </string>
 </resources>

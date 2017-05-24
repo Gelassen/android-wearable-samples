@@ -42,14 +42,20 @@ import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.wearable.DataApi;
 import com.google.android.gms.wearable.DataEventBuffer;
+import com.google.android.gms.wearable.MessageApi;
+import com.google.android.gms.wearable.MessageEvent;
+import com.google.android.gms.wearable.Node;
+import com.google.android.gms.wearable.NodeApi;
 import com.google.android.gms.wearable.PutDataMapRequest;
 import com.google.android.gms.wearable.PutDataRequest;
 import com.google.android.gms.wearable.Wearable;
 
 public class MainActivity extends BaseActivity implements
         DataApi.DataListener,
+        NodeApi.NodeListener,
         LoaderManager.LoaderCallbacks<Cursor>,
-        ForecastAdapter.ForecastAdapterOnClickHandler {
+        ForecastAdapter.ForecastAdapterOnClickHandler,
+        MessageApi.MessageListener {
 
     private final String TAG = MainActivity.class.getSimpleName();
 
@@ -89,7 +95,6 @@ public class MainActivity extends BaseActivity implements
     private int mPosition = RecyclerView.NO_POSITION;
 
     private ProgressBar mLoadingIndicator;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,12 +177,17 @@ public class MainActivity extends BaseActivity implements
     @Override
     public void subscribe() {
         Log.d(App.TAG, "subscribe");
-        Wearable.DataApi.addListener(googleApiClient, this);
+//        Wearable.DataApi.addListener(googleApiClient, this);
+        Wearable.NodeApi.addListener(googleApiClient, this);
+        Wearable.MessageApi.addListener(googleApiClient, this);
         initDataStore();
     }
 
     @Override
     public void unsubscribe() {
+//        Wearable.DataApi.removeListener(googleApiClient, this);
+        Wearable.NodeApi.addListener(googleApiClient, this);
+        Wearable.MessageApi.removeListener(googleApiClient, this);
         googleApiClient.disconnect();
     }
 
@@ -405,5 +415,25 @@ public class MainActivity extends BaseActivity implements
     @Override
     public void onDataChanged(DataEventBuffer dataEventBuffer) {
         Log.d(App.TAG, "[device] onDataChanged");
+    }
+
+    @Override
+    public void onMessageReceived(MessageEvent messageEvent) {
+        Log.d(App.TAG, "onMessageReceived: " + messageEvent.getPath());
+        boolean isWeatherChannel = getString(R.string.resource_weather_update).equals(messageEvent.getPath());
+        if (isWeatherChannel) {
+            // send update to the server
+            SunshineSyncUtils.startImmediateSync(this);
+        }
+    }
+
+    @Override
+    public void onPeerConnected(Node node) {
+
+    }
+
+    @Override
+    public void onPeerDisconnected(Node node) {
+
     }
 }

@@ -1,4 +1,4 @@
-package com.example.android.sunshine;
+package com.example.android.sunshine.legacy;
 
 
 import android.util.Log;

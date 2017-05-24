@@ -1,10 +1,11 @@
-package com.example.android.sunshine;
+package com.example.android.sunshine.legacy;
 
 
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.support.wearable.view.FragmentGridPagerAdapter;
 
+import com.example.android.sunshine.WeatherPageFragment;
 import com.example.android.sunshine.library.model.WeatherData;
 
 import java.util.ArrayList;
