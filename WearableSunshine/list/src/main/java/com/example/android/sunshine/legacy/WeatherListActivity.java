@@ -1,6 +1,8 @@
 package com.example.android.sunshine.legacy;
 
 
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,6 +25,7 @@ import com.google.android.gms.wearable.Wearable;
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
 
 import java.util.List;
+import java.util.Locale;
 
 public class WeatherListActivity extends WearableActivity implements
         WeatherListView,
@@ -33,6 +36,8 @@ public class WeatherListActivity extends WearableActivity implements
     private WeatherListPresenter presenter;
     private PagerAdapter adapter;
 
+    private Typeface typeface;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,11 +45,14 @@ public class WeatherListActivity extends WearableActivity implements
 
         presenter = new WeatherListPresenter(googleApiClient, this);
 
+        AssetManager am = getApplicationContext().getAssets();
+        typeface = Typeface.createFromAsset(am, String.format(Locale.US, "font/%s", "DroidSerif-Regular.ttf"));
+
         RecyclerViewPager pager = (RecyclerViewPager) findViewById(R.id.pager);
 
         pager.setLayoutManager(new LinearLayoutManager(this,
                 LinearLayoutManager.HORIZONTAL, false));
-        adapter = new PagerAdapter(getLayoutInflater());
+        adapter = new PagerAdapter(getLayoutInflater(), typeface);
         pager.setAdapter(adapter);
 
         presenter.processWeatherCachedData();

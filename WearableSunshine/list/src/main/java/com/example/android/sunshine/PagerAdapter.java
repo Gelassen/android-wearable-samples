@@ -2,6 +2,8 @@ package com.example.android.sunshine;
 
 
 import android.annotation.SuppressLint;
+import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,9 +22,11 @@ public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.PageControll
     private final LayoutInflater inflater;
 
     private List<WeatherData> dataSource = new ArrayList<>();
+    private Typeface typeface;
 
-    public PagerAdapter(LayoutInflater inflater) {
-        this.inflater=inflater;
+    public PagerAdapter(LayoutInflater inflater, Typeface typeface) {
+        this.inflater = inflater;
+        this.typeface = typeface;
     }
 
     @Override
