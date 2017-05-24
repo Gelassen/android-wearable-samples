@@ -1,7 +1,6 @@
 package com.example.android.sunshine;
 
 
-import android.app.job.JobScheduler;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,9 +13,6 @@ import com.example.android.sunshine.presenter.WeatherListPresenter;
 import com.example.android.sunshine.presenter.WeatherListView;
 import com.google.android.gms.wearable.DataApi;
 import com.google.android.gms.wearable.DataEventBuffer;
-import com.google.android.gms.wearable.MessageApi;
-import com.google.android.gms.wearable.MessageEvent;
-import com.google.android.gms.wearable.Node;
 import com.google.android.gms.wearable.Wearable;
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
 
@@ -26,14 +22,8 @@ public class WeatherPagerActivity extends WearableActivity implements
         DataApi.DataListener,
         WeatherListView {
 
-    private static final int PERIODIC_JOB_ID = 1000;
-    private static final long TEN_SECONDS_PERIOD = 10 * 1000;
-
     private WeatherListPresenter presenter;
     private PagerAdapter adapter;
-
-    private JobScheduler jobScheduler;
-    private Node node;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,14 +38,6 @@ public class WeatherPagerActivity extends WearableActivity implements
         presenter.processWeatherCachedData();
 
         presenter.getNodes(this, googleApiClient);
-
-//        jobScheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
-//        ComponentName componentName = new ComponentName(this, SyncService.class);
-//        JobInfo test = new JobInfo.Builder(PERIODIC_JOB_ID, componentName)
-//                .setPeriodic(TEN_SECONDS_PERIOD)
-//                .build();
-//        jobScheduler.schedule(test);
-//        SyncService.scheduleJob(this, null);
     }
 
     @Override
