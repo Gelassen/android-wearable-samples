@@ -33,11 +33,14 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.example.android.sunshine.data.SunshinePreferences;
+import com.example.android.sunshine.library.AppApplication;
 import com.example.android.sunshine.library.BaseActivity;
 import com.example.android.sunshine.library.model.WeatherContract;
 import com.example.android.sunshine.library.model.WeatherConverter;
 import com.example.android.sunshine.library.utils.DataWearInteractor;
 import com.example.android.sunshine.sync.SunshineSyncUtils;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.wearable.DataApi;
@@ -383,7 +386,16 @@ public class MainActivity extends BaseActivity implements
 //            openPreferredLocationInMap();
             // TODO implement sync of data
 //            shareObject();
-            initDataStore();
+//            initDataStore();
+
+            Tracker tracker = ((AppApplication) getApplication()).getDefaultTracker();
+//            tracker.send(new HitBuilders.EventBuilder()
+//                    .setCategory("Action")
+//                    .setAction("Share")
+//                    .build());
+            tracker.setScreenName("Main activity");
+            tracker.send(new HitBuilders.ScreenViewBuilder().build());
+
             return true;
         }
 

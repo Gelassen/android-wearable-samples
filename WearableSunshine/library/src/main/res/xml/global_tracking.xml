@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ga_trackingId" translatable="false">UA-99905973-1</string>
+    <string name="ga_sampleFrequency">100.0</string>
+    <integer name="ga_sessionTimeout">100</integer>
+    <bool name="ga_autoActivityTracking">true</bool>
+    <bool name="ga_reportUncaughtExceptions">true</bool>
+
+    <!-- The screen names that will appear in reports -->
+    <screenName name="com.example.android.sunshine.MainActivity">
+        MainActivityScreen
+    </screenName>
+    <screenName name="com.example.android.sunshine.DetailsActivity">
+        DetailsActivityScreen
+    </screenName>
+</resources>

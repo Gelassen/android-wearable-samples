@@ -8,6 +8,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.wearable.Wearable;
@@ -17,6 +19,7 @@ public abstract class WearableActivity extends Activity implements
         GoogleApiClient.OnConnectionFailedListener {
 
     protected GoogleApiClient googleApiClient;
+    protected Tracker tracker;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,6 +38,14 @@ public abstract class WearableActivity extends Activity implements
                     .penaltyDeath()
                     .build());
         }
+
+        AppApplication application = (AppApplication) getApplication();
+        tracker = application.getDefaultTracker();
+
+        // Set screen name.
+        tracker.setScreenName(BaseActivity.class.getName());
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
+        Log.d(App.TAG, "Send data to the server");
 
         googleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(Wearable.API)
