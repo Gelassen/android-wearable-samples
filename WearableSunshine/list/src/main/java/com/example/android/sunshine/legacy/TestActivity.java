@@ -12,6 +12,7 @@ import com.example.android.sunshine.library.App;
 import com.example.android.sunshine.library.BaseActivity;
 import com.example.android.sunshine.library.WearableActivity;
 import com.example.android.sunshine.presenter.WeatherListPresenter;
+import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.Result;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.wearable.CapabilityApi;
@@ -19,8 +20,10 @@ import com.google.android.gms.wearable.CapabilityInfo;
 import com.google.android.gms.wearable.MessageApi;
 import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.Node;
+import com.google.android.gms.wearable.NodeApi;
 import com.google.android.gms.wearable.Wearable;
 
+import java.util.List;
 import java.util.Set;
 
 public class TestActivity extends WearableActivity implements
@@ -52,8 +55,46 @@ public class TestActivity extends WearableActivity implements
         findViewById(R.id.find_node).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createListener();
+//                createListener();
+                Log.d(App.TAG, "Discover nodes");
+                PendingResult<NodeApi.GetConnectedNodesResult> pr = Wearable.NodeApi.getConnectedNodes(googleApiClient);
+                pr.setResultCallback(new ResultCallback<NodeApi.GetConnectedNodesResult>() {
+                    @Override
+                    public void onResult(@NonNull NodeApi.GetConnectedNodesResult getLocalNodeResult) {
+                        Log.d(App.TAG, "onResult");
+                        List<Node> nodes = getLocalNodeResult.getNodes();
+                        Log.d(App.TAG, "Nodes amount: " + nodes.size());
+                        boolean isThereNodes = nodes.size() != 0;
+                        if (isThereNodes) {
+                            node = nodes.get(0);
+                        }
+                    }
+                });
             }
+        });
+
+        findViewById(R.id.node_emmit)
+                .setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Log.d(App.TAG, "Find emmit nodes");
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.d(App.TAG, "getAvailableNodes inner call");
+                        CapabilityApi.GetCapabilityResult result =
+                                Wearable.CapabilityApi.getCapability(
+                                        googleApiClient, TestActivity.this.getString(R.string.resource_weather_update),
+                                        CapabilityApi.FILTER_REACHABLE).await();
+
+                        Set<Node> nodes = result.getCapability().getNodes();
+                        Log.d(com.example.android.sunshine.library.App.TAG, "[find] Nodes: " + nodes.size());
+                    }
+                }).start();
+            }
+
         });
     }
 

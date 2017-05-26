@@ -1,9 +1,16 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'android'
+            keyPassword 'android'
+            storeFile file('C:/workspace/android-wearable-samples/WearableSunshine/android.jks')
+            storePassword 'android'
+        }
+    }
     compileSdkVersion 25
     buildToolsVersion '25.0.2'
-
     defaultConfig {
         applicationId "com.example.android.sunshine"
         minSdkVersion 22
@@ -15,24 +22,18 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.config
         }
     }
-
     dataBinding.enabled = true
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-
     wearApp project(':list')
     compile project(':library')
+    //    compile 'com.google.android.gms:play-services-analytics:10.2.4'
 
-//    compile 'com.google.android.gms:play-services-analytics:10.2.4'
-
-    compile 'io.reactivex:rxandroid:1.0.1'
-    compile 'io.reactivex:rxjava:1.0.14'
-    compile 'com.squareup.retrofit2:retrofit:2.1.0'
-    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
     compile 'com.android.support:recyclerview-v7:25.0.1'
     compile 'com.android.support:preference-v7:25.0.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta3'

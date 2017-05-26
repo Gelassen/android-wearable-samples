@@ -8,6 +8,6 @@
     <string name="tomorrow">Tomorrow</string>
 
 
-    <string name="resource_weather_update">/weather_update</string>
+    <string name="resource_weather_update">msg</string> <!--weather_update-->
 
 </resources>

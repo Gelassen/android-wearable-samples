@@ -17,4 +17,11 @@
         android:text="Find nodes"
         />
 
+    <Button
+        android:id="@+id/node_emmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Find emmiting nodes"
+        />
+
 </LinearLayout>
