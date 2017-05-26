@@ -71,6 +71,7 @@ public class MainActivity extends BaseActivity implements
             WeatherContract.WeatherEntry.COLUMN_MAX_TEMP,
             WeatherContract.WeatherEntry.COLUMN_MIN_TEMP,
             WeatherContract.WeatherEntry.COLUMN_WEATHER_ID,
+            WeatherContract.WeatherEntry.COLUMN_HUMIDITY
     };
 
     /*
@@ -274,6 +275,8 @@ public class MainActivity extends BaseActivity implements
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         if (data == null || data.getCount() == 0) return;
         Log.d(App.TAG, "[device] onLoadFinished: " + data.getCount());
+        Log.d(App.TAG, "[device] " + data.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_HUMIDITY));
+
         syncDataWithWearable(data);
         data.moveToFirst();
 
@@ -384,45 +387,11 @@ public class MainActivity extends BaseActivity implements
             return true;
         }
         if (id == R.id.action_map) {
-//            openPreferredLocationInMap();
-            // TODO implement sync of data
-//            shareObject();
-//            initDataStore();
-
-            Tracker tracker = ((AppApplication) getApplication()).getDefaultTracker();
-//            tracker.send(new HitBuilders.EventBuilder()
-//                    .setCategory("Action")
-//                    .setAction("Share")
-//                    .build());
-            tracker.setScreenName("Main activity");
-            tracker.send(new HitBuilders.ScreenViewBuilder().build());
 
             return true;
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private int count = 0;
-
-    private void shareObject() {
-        PutDataMapRequest putDataMapReq = PutDataMapRequest.create("/weather");
-        putDataMapReq.getDataMap().putInt("COUNT_KEY", count++);
-        putDataMapReq.setUrgent();
-        PutDataRequest putDataReq = putDataMapReq.asPutDataRequest();
-        PendingResult<DataApi.DataItemResult> pendingResult =
-                Wearable.DataApi.putDataItem(googleApiClient, putDataReq);
-
-        Wearable.DataApi.putDataItem(googleApiClient, putDataReq);
-        pendingResult.setResultCallback(new ResultCallback<DataApi.DataItemResult>() {
-            @Override
-            public void onResult(@NonNull DataApi.DataItemResult dataItemResult) {
-                // TODO receive result
-                Log.d(App.TAG, "onResult");
-                Log.d(App.TAG, "putDataItem status: "
-                        + dataItemResult.getStatus().toString());
-            }
-        });
     }
 
     @Override

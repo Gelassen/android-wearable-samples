@@ -20,6 +20,7 @@ public class WeatherConverter implements IConverter<ContentValues, WeatherData> 
     public static final int INDEX_WEATHER_MAX_TEMP = 1;
     public static final int INDEX_WEATHER_MIN_TEMP = 2;
     public static final int INDEX_WEATHER_CONDITION_ID = 3;
+    public static final int INDEX_HUMIDITY = 4;
 
     private static final String JSON = "json";
 
@@ -132,6 +133,7 @@ public class WeatherConverter implements IConverter<ContentValues, WeatherData> 
         result.setMax(cursor.getLong(INDEX_WEATHER_MAX_TEMP));
         result.setMin(cursor.getLong(INDEX_WEATHER_MIN_TEMP));
         result.setWeatherId(cursor.getInt(INDEX_WEATHER_CONDITION_ID));
+        result.setHumidity(cursor.getInt(INDEX_HUMIDITY));
         return result;
     }
 
