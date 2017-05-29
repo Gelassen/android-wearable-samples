@@ -31,12 +31,10 @@ import android.view.MenuItem;
 import com.example.android.sunshine.library.model.WeatherContract;
 import com.example.android.sunshine.databinding.ActivityDetailBinding;
 import com.example.android.sunshine.library.BaseActivity;
-import com.example.android.sunshine.library.Params;
 import com.example.android.sunshine.library.utils.SunshineDateUtils;
 import com.example.android.sunshine.utilities.SunshineWeatherUtils;
 import com.google.android.gms.wearable.DataApi;
 import com.google.android.gms.wearable.DataEventBuffer;
-import com.google.android.gms.wearable.PutDataMapRequest;
 import com.google.android.gms.wearable.Wearable;
 
 public class DetailActivity extends BaseActivity implements
@@ -146,7 +144,7 @@ public class DetailActivity extends BaseActivity implements
         /* Use the inflater's inflate method to inflate our menu layout to this menu */
         inflater.inflate(R.menu.detail, menu);
         /* Return true so that the menu is displayed in the Toolbar */
-        return true;
+        return false; // despite on ability to change the city, resource by url is static
     }
 
     /**
@@ -183,12 +181,6 @@ public class DetailActivity extends BaseActivity implements
     @Override
     public void onDataChanged(DataEventBuffer dataEventBuffer) {
         // TODO complete me
-    }
-
-    private void syncDataWithWearable() {
-        // TODO complete me
-        PutDataMapRequest putDataMapRequest = PutDataMapRequest.create(Params.WEATHER);
-//        putDataMapRequest.
     }
 
     /**

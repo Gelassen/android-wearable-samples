@@ -367,7 +367,7 @@ public class MainActivity extends BaseActivity implements
         /* Use the inflater's inflate method to inflate our menu layout to this menu */
         inflater.inflate(R.menu.forecast, menu);
         /* Return true so that the menu is displayed in the Toolbar */
-        return true;
+        return false; // despite on ability to change the city, resource by url is static
     }
 
     /**
@@ -387,7 +387,7 @@ public class MainActivity extends BaseActivity implements
             return true;
         }
         if (id == R.id.action_map) {
-
+            openPreferredLocationInMap();
             return true;
         }
 
