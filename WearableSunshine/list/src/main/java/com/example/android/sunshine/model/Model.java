@@ -36,7 +36,9 @@ public class Model {
                 CapabilityApi.GetCapabilityResult result =
                         Wearable.CapabilityApi.getCapability(
                                 googleApiClient, context.getString(R.string.resource_weather_update),
-                                CapabilityApi.FILTER_REACHABLE).await();
+                                CapabilityApi.FILTER_ALL).await();
+
+                if (result.getCapability() == null) return;
 
                 Set<Node> nodes = result.getCapability().getNodes();
                 Log.d(com.example.android.sunshine.library.App.TAG, "[find] Nodes: " + nodes.size());

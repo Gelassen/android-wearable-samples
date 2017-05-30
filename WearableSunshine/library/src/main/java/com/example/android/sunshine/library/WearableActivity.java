@@ -75,6 +75,10 @@ public abstract class WearableActivity extends Activity implements
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Log.d(App.TAG, "onConnectionFailed");
+        Log.d(App.TAG, "Failed message: " + connectionResult.getErrorMessage());
+        Log.d(App.TAG, "Failed code: " + connectionResult.getErrorCode());
+        Log.d(App.TAG, "With resolution: " + connectionResult.hasResolution());
+        // TODO properly handle error codes {@see https://developers.google.com/android/reference/com/google/android/gms/common/ConnectionResult#SERVICE_VERSION_UPDATE_REQUIRED}
     }
 
     public abstract void subscribe();

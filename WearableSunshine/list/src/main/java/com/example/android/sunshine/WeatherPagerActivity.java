@@ -2,17 +2,22 @@ package com.example.android.sunshine;
 
 
 import android.content.res.AssetManager;
+import android.graphics.Point;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
+import android.view.View;
+import android.view.WindowInsets;
 
 import com.example.android.sunshine.library.App;
 import com.example.android.sunshine.library.WearableActivity;
 import com.example.android.sunshine.library.model.WeatherData;
 import com.example.android.sunshine.presenter.WeatherListPresenter;
 import com.example.android.sunshine.presenter.WeatherListView;
+import com.example.android.sunshine.weatherpage.PagerAdapter;
+import com.example.android.sunshine.weatherpage.WeatherPageDecorator;
 import com.google.android.gms.wearable.DataApi;
 import com.google.android.gms.wearable.DataEventBuffer;
 import com.google.android.gms.wearable.Wearable;
@@ -20,8 +25,6 @@ import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
 
 import java.util.List;
 import java.util.Locale;
-
-import static android.R.attr.typeface;
 
 public class WeatherPagerActivity extends WearableActivity implements
         DataApi.DataListener,
@@ -49,6 +52,47 @@ public class WeatherPagerActivity extends WearableActivity implements
         presenter.processWeatherCachedData();
 
         presenter.getNodes(this, googleApiClient);
+
+        pager.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
+            @Override
+            public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
+                int bottomInset = insets.getSystemWindowInsetBottom();
+//                Log.d(App.TAG, "==========");
+//                Log.d(App.TAG, "==========");
+//                Log.d(App.TAG, "Bottom offset: " + bottomInset);
+//                Log.d(App.TAG, "==========");
+//                Log.d(App.TAG, "==========");
+//
+                Point displaySize = new Point();
+                getWindowManager().getDefaultDisplay().getRealSize(displaySize);
+//
+//                Log.d(App.TAG, "Device height: " + displaySize.y);
+//                Log.d(App.TAG, "Bottom offset in percent" + (float) bottomInset / displaySize.y);
+                adapter.setDecorator(new WeatherPageDecorator((float) bottomInset / displaySize.y));
+                return insets;
+            }
+        });
+
+
+
+
+
+//        holder.itemView.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
+//
+//            @Override
+//            public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
+//                int bottomInset = insets.getSystemWindowInsetBottom();
+//                Log.d(App.TAG, "Bottom offset: " + bottomInset);
+//                // TODO add margin for humidity field
+//                PercentFrameLayout.LayoutParams params = (PercentFrameLayout.LayoutParams) holder.humidity.getLayoutParams();
+////                PercentLayoutHelper.PercentLayoutInfo info = params.getPercentLayoutInfo();
+////                info.bottomMarginPercent = 0.1f;
+//                params.bottomMargin = 68;//bottomInset * 2;
+//                holder.humidity.setLayoutParams(params);
+//                return insets;
+//            }
+//
+//        });
     }
 
     @Override

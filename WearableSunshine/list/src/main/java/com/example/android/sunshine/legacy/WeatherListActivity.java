@@ -9,7 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.wearable.view.WearableListView;
 import android.util.Log;
 
-import com.example.android.sunshine.PagerAdapter;
+import com.example.android.sunshine.weatherpage.PagerAdapter;
 import com.example.android.sunshine.R;
 import com.example.android.sunshine.library.App;
 import com.example.android.sunshine.library.WearableActivity;

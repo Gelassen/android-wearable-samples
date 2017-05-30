@@ -16,4 +16,9 @@
     <dimen name="text_height_min_temp">21sp</dimen>
     <dimen name="text_height_date">32sp</dimen>
     <dimen name="text_height_icon">22sp</dimen>
+
+
+    <dimen name="temp_max">32sp</dimen>
+    <dimen name="temp_min">32sp</dimen>
+
 </resources>
