@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="temp_max">24sp</dimen>
+    <dimen name="temp_min">24sp</dimen>
+</resources>

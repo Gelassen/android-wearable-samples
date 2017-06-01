@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="header_start_padding">16dp</dimen>
+    <dimen name="header_end_padding">16dp</dimen>
+    <dimen name="list_start_padding">10dp</dimen>
+    <dimen name="list_end_padding">10dp</dimen>
+
+    <dimen name="item_height">38dp</dimen>
+    <dimen name="item_width">38dp</dimen>
+    <dimen name="item_margin">6dp</dimen>
+    <dimen name="item_margin_start">8dp</dimen>
+
+    <dimen name="item_padding_top">5dp</dimen>
+    <dimen name="item_padding_bottom">5dp</dimen>
+    <dimen name="text_height_max_temp">42sp</dimen>
+    <dimen name="text_height_min_temp">21sp</dimen>
+    <dimen name="text_height_date">32sp</dimen>
+    <dimen name="text_height_icon">22sp</dimen>
+
+
+    <dimen name="temp_max">24sp</dimen>
+    <dimen name="temp_min">24sp</dimen>
+
+</resources>

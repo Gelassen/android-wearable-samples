@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fitsSystemWindows="true"
+    tools:deviceIds="wear">
+
+    <TextView
+        android:id="@+id/temp_max"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_heightPercent="25%"
+        app:layout_widthPercent="100%"
+        app:layout_marginTopPercent="5%"
+        android:gravity="center"
+        android:textSize="@dimen/text_height_max_temp"
+        android:text="27"
+        />
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_heightPercent="25%"
+        app:layout_widthPercent="100%"
+        app:layout_marginTopPercent="25%"
+        android:gravity="center"
+        android:textSize="@dimen/text_height_date"
+        android:text="Today"
+        />
+
+    <TextView
+        android:id="@+id/temp_min"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_heightPercent="25%"
+        app:layout_widthPercent="100%"
+        app:layout_marginTopPercent="50%"
+        app:layout_marginBottomPercent="5%"
+        android:gravity="center"
+        android:textSize="@dimen/text_height_min_temp"
+        android:text="17"
+        />
+
+    <ImageButton
+        android:id="@+id/weather"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        app:layout_heightPercent="25%"
+        android:scaleType="fitCenter"
+        android:src="@drawable/inset_weather"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:fitsSystemWindows="true"
+        />
+
+</android.support.percent.PercentRelativeLayout>

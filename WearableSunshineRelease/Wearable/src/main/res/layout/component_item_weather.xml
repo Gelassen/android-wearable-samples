@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentFrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    >
+
+    <android.support.wearable.view.BoxInsetLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:background="@color/blue"
+        tools:deviceIds="wear"
+        >
+
+        <android.support.percent.PercentRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_box="all">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_heightPercent="50%"
+                app:layout_widthPercent="100%"
+                app:layout_marginLeftPercent="25%"
+                app:layout_marginRightPercent="25%"
+                android:orientation="vertical"
+                android:layout_alignParentTop="true"
+                android:layout_alignEnd="@+id/weather"
+                >
+
+                <TextView
+                    android:id="@+id/temp_max"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:elegantTextHeight="true"
+                    android:paddingTop="6dp"
+                    android:gravity="center"
+                    android:text="27"
+                    android:textSize="@dimen/temp_max" />
+
+                <TextView
+                    android:id="@+id/temp_min"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:paddingTop="-6dp"
+                    android:paddingBottom="6dp"
+                    android:gravity="center"
+                    android:text="17"
+                    android:textSize="@dimen/temp_min" />
+
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/weather"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/inset_weather"
+                app:layout_heightPercent="25%"
+                app:layout_marginTopPercent="13%"
+                app:layout_marginBottomPercent="13%"
+                app:layout_marginLeftPercent="50%"
+                app:layout_marginRightPercent="25%"
+                />
+
+        </android.support.percent.PercentRelativeLayout>
+
+    </android.support.wearable.view.BoxInsetLayout>
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_heightPercent="25%"
+        app:layout_marginTopPercent="50%"
+        android:background="@color/white"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:textSize="22sp"
+        android:text="TODAY"
+        />
+
+
+    <TextView
+        android:id="@+id/condition"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:layout_weight="0.25"
+        app:layout_heightPercent="25%"
+        app:layout_marginTopPercent="75%"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:textSize="12sp"
+        android:text="humidity 78%"
+        />
+
+</android.support.percent.PercentFrameLayout>
