@@ -1,12 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 
-    package="com.example.android.sunshine.library">
+    package="com.coderbunker.android.sunshine.library">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
-        android:name=".AppApplication"
+        android:name="com.coderbunker.android.sunshine.library.AppApplication"
         android:allowBackup="true"
         android:label="@string/app_name"
         android:supportsRtl="true">

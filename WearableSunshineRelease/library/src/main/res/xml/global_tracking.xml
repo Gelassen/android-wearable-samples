@@ -7,10 +7,10 @@
     <bool name="ga_reportUncaughtExceptions">true</bool>
 
     <!-- The screen names that will appear in reports -->
-    <screenName name="com.example.android.sunshine.MainActivity">
+    <screenName name="com.coderbunker.android.sunshine.MainActivity">
         MainActivityScreen
     </screenName>
-    <screenName name="com.example.android.sunshine.DetailsActivity">
+    <screenName name="com.coderbunker.android.sunshine.DetailsActivity">
         DetailsActivityScreen
     </screenName>
 </resources>
