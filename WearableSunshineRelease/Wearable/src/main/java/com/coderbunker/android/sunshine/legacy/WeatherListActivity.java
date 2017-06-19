@@ -36,7 +36,7 @@ public class WeatherListActivity extends WearableActivity implements
     private WeatherListPresenter presenter;
     private PagerAdapter adapter;
 
-    private Typeface typeface;
+//    private Typeface typeface;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,14 +45,14 @@ public class WeatherListActivity extends WearableActivity implements
 
         presenter = new WeatherListPresenter(googleApiClient, this);
 
-        AssetManager am = getApplicationContext().getAssets();
-        typeface = Typeface.createFromAsset(am, String.format(Locale.US, "font/%s", "DroidSerif-Regular.ttf"));
+//        AssetManager am = getApplicationContext().getAssets();
+//        typeface = Typeface.createFromAsset(am, String.format(Locale.US, "font/%s", "DroidSerif-Regular.ttf"));
 
         RecyclerViewPager pager = (RecyclerViewPager) findViewById(R.id.pager);
 
         pager.setLayoutManager(new LinearLayoutManager(this,
                 LinearLayoutManager.HORIZONTAL, false));
-        adapter = new PagerAdapter(getLayoutInflater(), typeface);
+        adapter = new PagerAdapter(getLayoutInflater(), null);
         pager.setAdapter(adapter);
 
         presenter.processWeatherCachedData();

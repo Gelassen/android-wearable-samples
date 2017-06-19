@@ -54,12 +54,11 @@ public class PagerAdapter extends RecyclerView.Adapter<PagerAdapter.PageControll
                         weatherData.getHumidity()) + "%"
         );
 
-//        PercentFrameLayout.LayoutParams params = (PercentFrameLayout.LayoutParams) holder.humidity.getLayoutParams();
-//        params.bottomMargin = 68;//bottomInset * 2;
-//        PercentLayoutHelper.PercentLayoutInfo info = params.getPercentLayoutInfo();
-//        info.topMarginPercent = 0.65f;
-//        holder.humidity.setLayoutParams(params);
-        decorator.apply(holder.humidity, (PercentFrameLayout.LayoutParams) holder.humidity.getLayoutParams());
+        decorator.applyOffset(holder.humidity, (PercentFrameLayout.LayoutParams) holder.humidity.getLayoutParams());
+        decorator.applyTypeface(holder.maxTemp, typeface);
+        decorator.applyTypeface(holder.minTemp, typeface);
+        decorator.applyTypeface(holder.date, typeface);
+        decorator.applyTypeface(holder.humidity, typeface);
     }
 
     @Override

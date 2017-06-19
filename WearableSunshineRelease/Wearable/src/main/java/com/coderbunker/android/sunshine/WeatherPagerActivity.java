@@ -30,6 +30,8 @@ public class WeatherPagerActivity extends WearableActivity implements
         DataApi.DataListener,
         WeatherListView {
 
+    public static final String ACTIVITY_TAG = "ACTIVITY_TAG";
+
     private static final float offsetInPercent = 0.75f;
 
     private WeatherListPresenter presenter;
